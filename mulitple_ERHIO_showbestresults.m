@@ -1,22 +1,27 @@
-addpath(genpath('./m_scripts/'));
-addpath(genpath('./calc_functions'));
+addpath(genpath('../m_scripts/'));
+addpath(genpath('../calc_functions'));
+
+folderstr = '../Theta_annealing_blueshift_multiplesim_paperFig3_70angles/';
+
+addpath(genpath(folderstr));
+
+noiselevel_array_1 = [3];%[1 2 3]
 
 
-jitterlevel_1 = [10];%[0 5 10 20 40];
-mncrate_array_1 = [1e3];%[2e2 2e2 1e3];
-noiseflag_array_1 = [1];%[0 1 1];
-noiselevel_array_1 = [1];%[1 2 3]
+jitterlevel_1 = [0 5 10 20 40];%[0 5 10 20 40];
+mncrate_array_1 = [2e2 2e2 1e3];
+noiseflag_array_1 = [0 1 1];
 %flipflag_array = [0 0 1 1 1];
-flipflag_array = [0];
+flipflag_array = [1 1 0 1 1];
 %%%% no noise
 
 counter = 1;
 
-for mm = 1:numel(mncrate_array_1)
+for mm = 1:numel(noiselevel_array_1)
     
     noiselevel_str = num2str(noiselevel_array_1(mm));
-    mncntrate = mncrate_array_1(mm);
-    addNWstrain = noiseflag_array_1(mm);
+    mncntrate = mncrate_array_1(noiselevel_array_1(mm));
+    addNWstrain = 1;
     figure(mm);
     clf;
     hold on;
