@@ -1,26 +1,27 @@
 addpath(genpath('../m_scripts/'));
 addpath(genpath('../calc_functions'));
 
-folderstr = '../Theta_annealing_blueshift_multiplesim_paperFig3_70angles/';
+parentfolderstr = '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/';
 
-addpath(genpath(folderstr));
+addpath(genpath(parentfolderstr));
 
-noiselevel_array_1 = [3];%[1 2 3]
+folderstr = [parentfolderstr '/data_ERHIO_ini/'];
 
 
-jitterlevel_1 = [0 5 10 20 40];%[0 5 10 20 40];
-mncrate_array_1 = [2e2 2e2 1e3];
-noiseflag_array_1 = [0 1 1];
-%flipflag_array = [0 0 1 1 1];
-flipflag_array = [1 1 0 1 1];
+
+jitterlevel_1 = [100];
+mncrate_array_1 = [1e3];%[2e2 2e2 1e3];
+noiseflag_array_1 = [0];%[0 1 1];
+noiselevel_array_1 = [0];%[1 3 4];%[1 2 3]
 %%%% no noise
+flipflag_array = [0];
 
 counter = 1;
 
 for mm = 1:numel(noiselevel_array_1)
     
     noiselevel_str = num2str(noiselevel_array_1(mm));
-    mncntrate = mncrate_array_1(noiselevel_array_1(mm));
+    mncntrate = mncrate_array_1(mm);
     addNWstrain = 1;
     figure(mm);
     clf;
@@ -34,7 +35,7 @@ for mm = 1:numel(noiselevel_array_1)
         
         
         
-        load(['data_ERHIO_ini/struct_ERHIO_ini' noiselevel_str '_jitter_' num2str(percent)]);
+        load([folderstr 'struct_ERHIO_ini' noiselevel_str '_jitter_' num2str(percent)]);
         
         figure(mm);
         plot(log10(struct_best_ERHIO.chi),'LineWidth',3.0);
@@ -55,8 +56,10 @@ for mm = 1:numel(noiselevel_array_1)
         midpoint = [round(size(rho_2DFT_shift,1)/2)+1 round(size(rho_2DFT_shift,2)/2)+1 round(size(rho_2DFT_shift,3)/2)+1];
 
         dimension = 3;
-        DisplayResults.compare_two_objects(NW,rho_2DFT_shift,'','',[40 90 40 90],[midpoint(dimension)],num2str(dimension),42+counter);
-
+        intenscolor = [0 0.1];
+        phasecolor = [-2 2];
+        DisplayResults.compare_two_objects(NW/sqrt(mncntrate/mm),rho_2DFT_shift,'','',intenscolor,phasecolor,[40 90 40 90],[midpoint(dimension)],num2str(dimension),42+counter);
+        DisplayResults.compare_two_objects(NW/sqrt(mncntrate/mm),rho_2DFT_shift,'','',intenscolor,phasecolor,[40 90],[midpoint(dimension) midpoint(dimension)],'13',52+counter);
         %DisplayResults.compare_two_objects(ifftn(struct_best_ERHIO.dp),NW,'','',[1 128 1 128],[35],'3',52+counter);
 
         counter = counter + 1;

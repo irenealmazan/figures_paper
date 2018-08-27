@@ -2,15 +2,15 @@ addpath(genpath('./m_scripts/'));
 addpath(genpath('./calc_functions'));
 
 
-jitterlevel_1 = [5];%[0 5 10 20 40];
-mncrate_array_1 = [1e3];%[2e2 2e2 1e3];
-noiseflag_array_1 = [1];%[0 1 1];
-noiselevel_array_1 = [1];%[1 2 3]
+jitterlevel_1 = [0];%[0 5 10 20 40];
+mncrate_array_1 = [1e3 1e3 1e2 1e4];%[2e2 2e2 1e3];
+noiseflag_array_1 = [0 1 1 1];%[0 1 1];
+noiselevel_array_1 = [0 1 3 4];%[1 2 3]
 %flipflag_array = [0 0 1 1 1];
 flipflag_array = [1];
 %%%% no noise
 
-folderpath =  '../Theta_annealing_blueshift_multiplesim_paperFig3/data_ERHIO_ini/';
+folderpath =  '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/data_ERHIO_ini/';
 
 counter = 1;
 

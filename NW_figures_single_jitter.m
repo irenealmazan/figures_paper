@@ -1,5 +1,6 @@
 %%%%%%%%% Figure 2: error metric and example of one single calculation:
 %%{
+
 DisplayResults.show_rho_theta_update(6,errlist,rho.*support_iter,midsl,angles_list,delta_thscanvals'+dth_disp,norm_grad_rho(1:nrho),beta_rho(1:nrho),norm_grad_theta(1:cnt_ntheta-1),beta_theta(1:cnt_ntheta-1),'theta');
 
 h2 = figure(7);
@@ -67,40 +68,43 @@ midpoint = [round(size(rho_2DFT_shift,1)/2)+1 round(size(rho_2DFT_shift,2)/2)+1 
 phase_rho_2DFT_shift = angle(rho_2DFT_shift(midpoint(1),midpoint(2),midpoint(3)));
 
 % test phase ofset:
-phaseoffset_rho = 1.51;
+phaseoffset_rho = 1.54;
 phaseoffset_rho_ERHIO = 1.54;
 
-DisplayResults.compare_two_objects(NW*sqrt(mncntrate/mn).*conj(NW),rho_shift.*support_shift_fin.*conj(NW)*exp(-1i*phase_rho_shift)*exp(-1i*phaseoffset_rho),'object','retrieved object',[1 128],[midpoint_1(2) midpoint_1(3)],'23',31);
-DisplayResults.compare_two_objects(NW*sqrt(mncntrate/mn).*conj(NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*support_new_shift_final.*conj(NW)*exp(-1i*phaseoffset_rho_ERHIO),'','',[1 128],[midpoint_1(2) midpoint_1(3)],'23',32);
+intenscolor = [0 0.03];
+phasecolor = [0 2];
 
-DisplayResults.compare_two_objects(NW*sqrt(mncntrate/mn)*exp(-1i*phase_NW),rho_shift*exp(-1i*phase_rho_shift),'','',[1 128],[midpoint_1(2) midpoint_1(3)],'23',41);
-DisplayResults.compare_two_objects(NW*sqrt(mncntrate/mn)*exp(-1i*phase_NW),rho_2DFT_shift.*exp(-1i*phase_rho_2DFT_shift),'','',[1 128],[midpoint_1(2) midpoint_1(3)],'23',42);
+DisplayResults.compare_two_objects(NW*sqrt(mncntrate/mn).*conj(NW),rho_shift.*support_shift_fin.*conj(NW)*exp(-1i*phase_rho_shift)*exp(-1i*phaseoffset_rho),'object','retrieved object',intenscolor,phasecolor,[1 128],[midpoint_1(2) midpoint_1(3)],'23',31);
+DisplayResults.compare_two_objects(NW*sqrt(mncntrate/mn).*conj(NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*support_new_shift_final.*conj(NW)*exp(-1i*phaseoffset_rho_ERHIO),'','',intenscolor,phasecolor,[1 128],[midpoint_1(2) midpoint_1(3)],'23',32);
+
+DisplayResults.compare_two_objects(NW*sqrt(mncntrate/mn)*exp(-1i*phase_NW),rho_shift*exp(-1i*phase_rho_shift),'','',intenscolor,phasecolor,[1 128],[midpoint_1(2) midpoint_1(3)],'23',41);
+DisplayResults.compare_two_objects(NW*sqrt(mncntrate/mn)*exp(-1i*phase_NW),rho_2DFT_shift.*exp(-1i*phase_rho_2DFT_shift),'','',intenscolor,phasecolor,[1 128],[midpoint_1(2) midpoint_1(3)],'23',42);
 
 
 % figures:
 
-intenscolor = [0 0.35];
+intenscolor = [0 0.03];
 phase_color = [0 2];
 dimension = 3;
-FiguresForPaper.figure2_rightpanel(NW*sqrt(mncntrate/mn)*exp(-1i*phase_NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*support_new_shift_final,rho_shift.*exp(-1i*phase_rho_shift).*support_shift_fin,'','','',intenscolor,phase_color,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),26);
+FiguresForPaper.figure3_rightpanel(NW*sqrt(mncntrate/mn)*exp(-1i*phase_NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*support_new_shift_final,rho_shift.*exp(-1i*phase_rho_shift).*support_shift_fin,'','','',intenscolor,phase_color,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),26);
 
-intenscolor = [0 0.35];
+intenscolor = [0 0.03];
 phase_color = [-0.1 0.1];
-FiguresForPaper.figure2_rightpanel(NW*sqrt(mncntrate/mn).*conj(NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*conj(NW).*support_new_shift_final*exp(-1i*phaseoffset_rho_ERHIO),rho_shift.*conj(NW)*exp(-1i*phase_rho_shift)*exp(-1i*phaseoffset_rho).*support_shift_fin ,'','','',intenscolor,phase_color,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),27);
+FiguresForPaper.figure3_rightpanel(NW*sqrt(mncntrate/mn).*conj(NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*conj(NW).*support_new_shift_final*exp(-1i*phaseoffset_rho_ERHIO),rho_shift.*conj(NW)*exp(-1i*phase_rho_shift)*exp(-1i*phaseoffset_rho).*support_shift_fin ,'','','',intenscolor,phase_color,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),27);
 
 
 
 %%%%%%%%%%%%%% Figure 4: angle correction:
 [theta_iter] = DisplayResults.read_angles_iterations(data_exp,delta_thscanvals,delta_thscanvals);
-DisplayResults.display_all_angles_oneiterations_errorrel(theta_iter,data_exp,dth_disp,[1 cnt_ntheta],'absolute',1025);
+DisplayResults.display_all_angles_oneiterations_errorrel(theta_iter,data_exp,dth_disp,[1 500 1000 1500 cnt_ntheta],'absolute',1025);
 
 
 return;
 %%%%%%%%%%%% Saving figures:
 
 jitter_str = num2str(jitterlevel(jjj));
-%noiselevel_str = '1';
-folder_str = ['allresults_blueshift/jitter_' jitter_str '_noiselevel_' noiselevel_str '_70angles/'];
+noiselevel_str = '0';
+folder_str = [parentfolder 'allresults_blueshift/jitter_' jitter_str '_noiselevel_' noiselevel_str '/'];
 
 
 figure(6);

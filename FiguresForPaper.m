@@ -161,7 +161,84 @@ classdef FiguresForPaper
             
         end
         
+         function [] = figure2_noiseeffect(struct_toplot,intenscolor,phasecolor,phasecolor_2,window,index,dimension,fig_num)
+            
+            figure(fig_num);
+            clf;
+            
+            
+            
+            for jj = 1:numel(struct_toplot)
+                
+                NW1_3D = struct_toplot(jj).rho_shift;
+                support_3D = struct_toplot(jj).support_shift_fin;
+                
+                NW1_3D_nophase = struct_toplot(jj).rho_nophase;
+                
+                for ii = index
+                    
+                    switch dimension
+                        
+                        case '1'
+                            NW1_to_plot = squeeze(NW1_3D(ii,window(1):window(2),window(3):window(4)));
+                            NW1_nophase = squeeze(NW1_3D_nophase(ii,window(1):window(2),window(3):window(4)));
+                        case '2'
+                            NW1_to_plot = squeeze(NW1_3D(window(1):window(2),ii,window(3):window(4)));
+                            NW1_nophase = squeeze(NW1_3D_nophase(window(1):window(2),ii,window(3):window(4)));
+                        case '3'
+                            NW1_to_plot = NW1_3D(window(1):window(2),window(3):window(4),ii);
+                            NW1_nophase = NW1_3D_nophase(window(1):window(2),window(3):window(4),ii);
+                    end
+                    
+
+                    
+                    
+                    subplot(4,numel(struct_toplot),jj);
+                    imagesc(abs(NW1_to_plot));
+                    axis image;
+                    colorbar;          
+                    set(gca,'FontSize',30);
+                    axis off;
+                    caxis(intenscolor);
+                    
+                    subplot(4,numel(struct_toplot),numel(struct_toplot)+jj);
+                    imagesc(angle(NW1_to_plot));
+                    axis image;
+                    colorbar;
+                    set(gca,'FontSize',30);
+                    axis off;
+                    caxis(phasecolor);
+                    
+                    subplot(4,numel(struct_toplot),2*numel(struct_toplot)+jj);
+                    imagesc(angle(NW1_nophase));
+                    axis image;
+                    colorbar;
+                    set(gca,'FontSize',30);
+                    axis off;
+                    caxis(phasecolor_2);
+                    
+                    subplot(4,numel(struct_toplot),3*numel(struct_toplot)+jj);
+                    plot([window(1):window(2)],angle(NW1_nophase(:,round(size(NW1_nophase,1)/2))));
+                    ylim([phasecolor_2]);
+                    %axis image;
+                    %colorbar;
+                    set(gca,'FontSize',30);
+                    %axis off;
+                    %caxis(phasecolor_2);
+                    
+                    
+                    pause(.5);
+                    
+                    
+                    
+                end
+                
+            end
+            
+            
+         end
         
+       
         
         function [h] = display_effect_angle_noise_1D(rho_ini,rho_struct,info_struct,window,slice,dimension,fig_num)
             
@@ -457,7 +534,7 @@ classdef FiguresForPaper
             
         end
         
-        function [] = figure2_rightpanel(NW1,NW2,NW3,titleNW1,titleNW2,titleNW3,intenscolor,phasecolor,window,index,dimension,fig_num)
+        function [] = figure3_rightpanel(NW1,NW2,NW3,titleNW1,titleNW2,titleNW3,intenscolor,phasecolor,window,index,dimension,fig_num)
             
             figure(fig_num);
             clf;
@@ -547,10 +624,9 @@ classdef FiguresForPaper
             
             
             
-        end
+        end        
         
-        
-         function [] = figure5_bottompanel(struct_toplot,intenscolor,phasecolor,phasecolor_2,window,index,dimension,fig_num)
+        function [] = figure5_bottompanel(struct_toplot,intenscolor,phasecolor,phasecolor_2,window,index,dimension,fig_num)
             
             figure(fig_num);
             clf;
@@ -618,7 +694,133 @@ classdef FiguresForPaper
             
         end
         
+         
         
+        function [] = object_samejitter_differentnoise(struct_toplot,intenscolor,phasecolor,phasecolor_2,window,index,dimension,fig_num)
+            
+            figure(fig_num);
+            clf;
+            
+            
+            
+            for jj = 1:numel(struct_toplot)
+                
+                NW1_3D = struct_toplot(jj).rho_shift;
+                support_3D = angle(struct_toplot(jj).rho_nophase);%struct_toplot(jj).support_shift_fin;
+                
+                NW1_3D_nophase = struct_toplot(jj).rho_nophase;
+                
+                for ii = index
+                    
+                    switch dimension
+                        
+                        case '1'
+                            NW1_to_plot = squeeze(NW1_3D(ii,window(1):window(2),window(3):window(4)));
+                            support_plot = squeeze(support_3D(ii,window(1):window(2),window(3):window(4)));
+                            %NW1_nophase = squeeze(NW1_3D_nophase(ii,window(1):window(2),window(3):window(4)));
+                        case '2'
+                            NW1_to_plot = squeeze(NW1_3D(window(1):window(2),ii,window(3):window(4)));
+                            support_plot = squeeze(support_3D(window(1):window(2),ii,window(3):window(4)));
+                            %NW1_nophase = squeeze(NW1_3D_nophase(window(1):window(2),ii,window(3):window(4)));
+                        case '3'
+                            NW1_to_plot = NW1_3D(window(1):window(2),window(3):window(4),ii);
+                            support_plot = support_3D(window(1):window(2),window(3):window(4),ii);
+                           % NW1_nophase = NW1_3D_nophase(window(1):window(2),window(3):window(4),ii);
+                    end
+                    
+
+                    
+                    
+                    subplot(numel(struct_toplot),3,(jj-1)*3+1);
+                    imagesc(abs(NW1_to_plot));
+                    axis image;
+                    colorbar;          
+                    set(gca,'FontSize',30);
+                    axis off;
+                    caxis(intenscolor);
+                    
+                     subplot(numel(struct_toplot),3,(jj-1)*3+2);
+                    imagesc(angle(NW1_to_plot));
+                    axis image;
+                    colorbar;
+                    set(gca,'FontSize',30);
+                    axis off;
+                    caxis(phasecolor);
+                    
+                    
+                    subplot(numel(struct_toplot),3,(jj-1)*3+3);
+                    imagesc(support_plot);
+                    axis image;
+                    colorbar;
+                    set(gca,'FontSize',30);
+                    axis off;
+                    caxis([-0.1 0.1]);
+                    
+                    
+                    
+                    pause(.5);
+                    
+                    
+                    
+                end
+                
+            end
+            
+            
+        end
+                
+        function [] = object_samejitter_differentnoise_support(struct_toplot,X,Y,Z,fig_num)
+            
+            figure(fig_num);
+            clf;
+                        
+            for jj = 1:numel(struct_toplot)
+                
+                NW1_3D = struct_toplot(jj).rho_shift;
+                support_3D = struct_toplot(jj).support_shift_fin;
+                               
+                                
+                subplot(numel(struct_toplot),1,jj);
+                di(NW1_3D,-0.5,'g',X,Y,Z);
+                hold on;
+                h = di(support_3D,-0.5,'y',X,Y,Z);
+                alpha(h,0.3);
+                
+                
+                pause(.5);
+                
+                
+                
+            end
+                
+        end
+            
+        function [] = object_samejitter_differentnoise_realobject(struct_toplot,X,Y,Z,fig_num)
+            
+            figure(fig_num);
+            clf;
+                        
+            for jj = 1:numel(struct_toplot)
+                
+                NW1_3D = struct_toplot(jj).rho_shift;
+                NW = struct_toplot(jj).NW;
+                               
+                                
+                subplot(numel(struct_toplot),1,jj);
+                h1 = di(NW1_3D,-0.9,'g',X,Y,Z);
+                hold on;
+                h2 = di(NW,-0.9,'r',X,Y,Z);
+                alpha(h1,0.5);
+                alpha(h2,0.3);
+                
+                
+                pause(.5);
+                
+                
+                
+            end
+                
+        end
         
         function [support_new_shift_final,support_new_shift_vector] = figure2_flipsupport(flipflag,NW,support_new,angle_list,probe,ki_o,kf_o,X,Y,Z,d2_bragg)
             
@@ -636,13 +838,20 @@ classdef FiguresForPaper
             support_shift_abs = abs(support_new_shift);
             support_new_shift_final = (support_shift_abs>0.1*max(support_shift_abs(:)));
             
+            intenscolor = [0 0.1];
+            phasecolor = [-2 2];
             
-            
-            DisplayResults.compare_two_objects(NW,support_new_shift_final,'','',[40 90 40 90],[65],'3',31);
+            DisplayResults.compare_two_objects(NW,support_new_shift_final,'','',intenscolor,phasecolor,[40 90 40 90],[65],'3',31);
             
         end
-        
+   
+            
     end
-    
-    
+        
 end
+                
+        
+        
+ 
+    
+    
