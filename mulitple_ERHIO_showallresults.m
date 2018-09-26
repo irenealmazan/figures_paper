@@ -2,12 +2,12 @@ addpath(genpath('./m_scripts/'));
 addpath(genpath('./calc_functions'));
 
 
-jitterlevel_1 = [0];%[0 5 10 20 40];
-mncrate_array_1 = [1e3 1e3 1e2 1e4];%[2e2 2e2 1e3];
-noiseflag_array_1 = [0 1 1 1];%[0 1 1];
-noiselevel_array_1 = [0 1 3 4];%[1 2 3]
+jitterlevel_1 = [100];%[0 5 10 20 40];
+mncrate_array_1 = [1e4];%[2e2 2e2 1e3];
+noiseflag_array_1 = [1];%[0 1 1];
+noiselevel_array_1 = [4];%[1 2 3]
 %flipflag_array = [0 0 1 1 1];
-flipflag_array = [1];
+flipflag_array = [0];
 %%%% no noise
 
 folderpath =  '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/data_ERHIO_ini/';
@@ -54,8 +54,15 @@ for mm = 1:numel(mncrate_array_1)
             
             midpoint = [round(size(rho_2DFT_shift,1)/2)+1 round(size(rho_2DFT_shift,2)/2)+1 round(size(rho_2DFT_shift,3)/2)+1];
             
-            dimension = 3;
-            DisplayResults.compare_two_objects(NW,rho_2DFT_shift,'','',[40 90 40 90],[midpoint(dimension)],num2str(dimension),42+counter);
+             dimension = 3;
+            intenscolor = [0 0.1];
+            phasecolor = [-2 2];
+            DisplayResults.compare_two_objects(NW/sqrt(mncntrate/mm),rho_2DFT_shift,num2str(kk),'',intenscolor,phasecolor,[40 90 40 90],[midpoint(dimension)],num2str(dimension),42+counter);
+            DisplayResults.compare_two_objects(NW/sqrt(mncntrate/mm),rho_2DFT_shift,num2str(kk),'',intenscolor,phasecolor,[40 90],[midpoint(dimension) midpoint(dimension)],'13',52+counter);
+            
+            
+            %dimension = 3;
+            %DisplayResults.compare_two_objects(NW,rho_2DFT_shift,'','',[40 90 40 90],[midpoint(dimension)],num2str(dimension),42+counter);
             %DisplayResults.compare_two_objects(NW,rho_ini,'','',[40 90 40 90],[65],'3',100);
 
             

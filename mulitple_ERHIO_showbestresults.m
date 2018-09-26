@@ -10,9 +10,9 @@ folderstr = [parentfolderstr '/data_ERHIO_ini/'];
 
 
 jitterlevel_1 = [100];
-mncrate_array_1 = [1e3];%[2e2 2e2 1e3];
-noiseflag_array_1 = [0];%[0 1 1];
-noiselevel_array_1 = [0];%[1 3 4];%[1 2 3]
+mncrate_array_1 = [1e4];%[2e2 2e2 1e3];
+noiseflag_array_1 = [1];%[0 1 1];
+noiselevel_array_1 = [4];%[1 3 4];%[1 2 3]
 %%%% no noise
 flipflag_array = [0];
 
@@ -23,7 +23,7 @@ for mm = 1:numel(noiselevel_array_1)
     noiselevel_str = num2str(noiselevel_array_1(mm));
     mncntrate = mncrate_array_1(mm);
     addNWstrain = 1;
-    figure(mm);
+    figure(100);
     clf;
     hold on;
     for jjj = 1:numel(jitterlevel_1)
@@ -37,7 +37,8 @@ for mm = 1:numel(noiselevel_array_1)
         
         load([folderstr 'struct_ERHIO_ini' noiselevel_str '_jitter_' num2str(percent)]);
         
-        figure(mm);
+        %figure(mm);
+        figure(100);
         plot(log10(struct_best_ERHIO.chi),'LineWidth',3.0);
         legend_str{jjj} = ['noiselevel = ' noiselevel_str ' jitter = ' num2str(percent)];
         
@@ -58,8 +59,8 @@ for mm = 1:numel(noiselevel_array_1)
         dimension = 3;
         intenscolor = [0 0.1];
         phasecolor = [-2 2];
-        DisplayResults.compare_two_objects(NW/sqrt(mncntrate/mm),rho_2DFT_shift,'','',intenscolor,phasecolor,[40 90 40 90],[midpoint(dimension)],num2str(dimension),42+counter);
-        DisplayResults.compare_two_objects(NW/sqrt(mncntrate/mm),rho_2DFT_shift,'','',intenscolor,phasecolor,[40 90],[midpoint(dimension) midpoint(dimension)],'13',52+counter);
+        DisplayResults.compare_two_objects(NW/sqrt(mncntrate/mm),rho_2DFT_shift,'','',intenscolor,phasecolor,[40 90 40 90],[midpoint(dimension)],num2str(dimension),72+counter);
+        DisplayResults.compare_two_objects(NW/sqrt(mncntrate/mm),rho_2DFT_shift,'','',intenscolor,phasecolor,[40 90],[midpoint(dimension) midpoint(dimension)],'13',82+counter);
         %DisplayResults.compare_two_objects(ifftn(struct_best_ERHIO.dp),NW,'','',[1 128 1 128],[35],'3',52+counter);
 
         counter = counter + 1;

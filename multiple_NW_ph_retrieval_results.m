@@ -4,8 +4,8 @@ addpath(genpath('../m_scripts/'));
 addpath(genpath('../calc_functions'));
 
 
-jitterlevel_1 = [100];
-noiselevel_array_1 = [0];%[1 2 3];
+jitterlevel_1 = [10];
+noiselevel_array_1 = [3];%[1 2 3];
 
 parentfolder = '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/';
 
@@ -25,7 +25,7 @@ for mm = 1:numel(noiselevel_array_1)
        
        flipflag = flipflag_array(jjj);
        
-        savefolder = [parentfolder 'allresults_blueshift/jitter_' num2str(jitterlevel_1(jjj)) '_noiselevel_' noiselevel_str];
+        savefolder = [parentfolder 'allresults_blueshift/jitter_' num2str(jitterlevel_1(jjj)) '_noiselevel_' noiselevel_str '_continuation'];
 
         load([savefolder '/results.mat']);
 

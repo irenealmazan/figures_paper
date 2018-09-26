@@ -534,12 +534,17 @@ classdef FiguresForPaper
             
         end
         
-        function [] = figure3_rightpanel(NW1,NW2,NW3,titleNW1,titleNW2,titleNW3,intenscolor,phasecolor,window,index,dimension,fig_num)
+        function [] = figure4_panel_a(NW_struct,intenscolor,phasecolor,phasecolor2,window,index,dimension,fig_num)
             
             figure(fig_num);
             clf;
             
-            
+            NW1 = NW_struct.NW1;
+            NW1_nophase = NW_struct.NW1_nophase;
+            NW2 = NW_struct.NW2;
+            NW2_nophase = NW_struct.NW2_nophase;
+            NW3 = NW_struct.NW1;
+            NW3_nophase = NW_struct.NW3_nophase;
             
             for ii = index
                 
@@ -547,75 +552,111 @@ classdef FiguresForPaper
                     
                     case '1'
                         NW1_to_plot = squeeze(NW1(ii,window(1):window(2),window(3):window(4)));
+                        NW1_to_plot_nophase = squeeze(NW1_nophase(ii,window(1):window(2),window(3):window(4)));
                         NW2_to_plot = squeeze(NW2(ii,window(1):window(2),window(3):window(4)));
+                        NW2_to_plot_nophase = squeeze(NW2_nophase(ii,window(1):window(2),window(3):window(4)));
                         NW3_to_plot = squeeze(NW3(ii,window(1):window(2),window(3):window(4)));
+                        NW3_to_plot_nophase = squeeze(NW3_nophase(ii,window(1):window(2),window(3):window(4)));
                     case '2'
                         NW1_to_plot = squeeze(NW1(window(1):window(2),ii,window(3):window(4)));
+                        NW1_to_plot_nophase = squeeze(NW1_nophase(window(1):window(2),ii,window(3):window(4)));
                         NW2_to_plot = squeeze(NW2(window(1):window(2),ii,window(3):window(4)));
+                        NW2_to_plot_nophase = squeeze(NW2_nophase(window(1):window(2),ii,window(3):window(4)));
                         NW3_to_plot = squeeze(NW3(window(1):window(2),ii,window(3):window(4)));
+                        NW3_to_plot_nophase = squeeze(NW3_nophase(window(1):window(2),ii,window(3):window(4)));
                     case '3'
                         NW1_to_plot = NW1(window(1):window(2),window(3):window(4),ii);
+                        NW1_to_plot_nophase = NW1_nophase(window(1):window(2),window(3):window(4),ii);
                         NW2_to_plot = NW2(window(1):window(2),window(3):window(4),ii);
+                        NW2_to_plot_nophase = NW2_nophase(window(1):window(2),window(3):window(4),ii);
                         NW3_to_plot = NW3(window(1):window(2),window(3):window(4),ii);
+                        NW3_to_plot_nophase = NW3_nophase(window(1):window(2),window(3):window(4),ii);
                 end
                 
                 
-                subplot(321);
+                subplot(331);
                 imagesc(abs(NW1_to_plot));
                 axis image;
-                colorbar;
-                title([titleNW1]);
+                %colorbar;
+                %title([titleNW1]);
                 set(gca,'FontSize',30);
                 axis off;
                 caxis(intenscolor);
                 
-                subplot(322);
+                subplot(332);
                 imagesc(angle(NW1_to_plot));
                 axis image;
-                colorbar;
-                title([titleNW1 ]);
+                %colorbar;
+                %title([titleNW1 ]);
                 set(gca,'FontSize',30);
                 axis off;
                 caxis(phasecolor);
                 
-                subplot(323);
+                subplot(333);
+                imagesc(angle(NW1_to_plot_nophase));
+                axis image;
+                %colorbar;
+                %title([titleNW1 ]);
+                set(gca,'FontSize',30);
+                axis off;
+                caxis(phasecolor2);
+                
+                subplot(334);
                 imagesc(abs(NW2_to_plot));
                 axis image;
-                colorbar;
-                title([titleNW2 ]);
+                %colorbar;
+                %title([titleNW2 ]);
                 set(gca,'FontSize',30);
                 axis off;
                 caxis(intenscolor);
                 
-                subplot(324);
+                subplot(335);
                 imagesc(angle(NW2_to_plot));
                 axis image;
-                colorbar;
-                title([titleNW2 ]);
+                %colorbar;
+                %title([titleNW2 ]);
                 set(gca,'FontSize',30);
                 axis off;
                 caxis(phasecolor);
                 
+                subplot(336);
+                imagesc(angle(NW2_to_plot_nophase));
+                axis image;
+                %colorbar;
+                %title([titleNW2 ]);
+                set(gca,'FontSize',30);
+                axis off;
+                caxis(phasecolor2);
                 
-                subplot(325);
+                
+                subplot(337);
                 imagesc(abs(NW3_to_plot));
                 axis image;
-                colorbar;
-                title([titleNW3 ]);
+                %colorbar;
+                %title([titleNW3 ]);
                 set(gca,'FontSize',30);
                 axis off;
                 caxis(intenscolor);
                 
-                subplot(326);
+                subplot(338);
                 imagesc(angle(NW3_to_plot));
                 axis image;
-                colorbar;
-                title([titleNW3 ]);
+                %colorbar;
+                %title([titleNW3 ]);
                 set(gca,'FontSize',30);
                 axis off;
                 caxis(phasecolor);
                 
-                pause(.5);
+                subplot(339);
+                imagesc(angle(NW3_to_plot_nophase));
+                axis image;
+                %colorbar;
+                %title([titleNW3 ]);
+                set(gca,'FontSize',30);
+                axis off;
+                caxis(phasecolor2);
+                
+          
                 
                 
                 
@@ -626,6 +667,50 @@ classdef FiguresForPaper
             
         end        
         
+        
+        function [] = figure2(NW_struct,intenscolor,phasecolor,phasecolor2,window,index,dimension,fig_num)
+           
+            for kk = 1:numel(NW_struct)
+                
+                
+                
+                NW1 = NW_struct(kk).NW1;
+                NW1_nophase = NW_struct(kk).NW1_nophase;
+                NW2 = NW_struct(kk).NW2;
+                NW2_nophase = NW_struct(kk).NW2_nophase;
+                
+                
+                switch dimension
+                    
+                    case '1'
+                        NW1_to_plot = squeeze(NW1(ii,window(1):window(2),window(3):window(4)));
+                        NW1_to_plot_nophase = squeeze(NW1_nophase(ii,window(1):window(2),window(3):window(4)));
+                        NW2_to_plot = squeeze(NW2(ii,window(1):window(2),window(3):window(4)));
+                        NW2_to_plot_nophase = squeeze(NW2_nophase(ii,window(1):window(2),window(3):window(4)));
+                   
+                    case '2'
+                        NW1_to_plot = squeeze(NW1(window(1):window(2),ii,window(3):window(4)));
+                        NW1_to_plot_nophase = squeeze(NW1_nophase(window(1):window(2),ii,window(3):window(4)));
+                        NW2_to_plot = squeeze(NW2(window(1):window(2),ii,window(3):window(4)));
+                        NW2_to_plot_nophase = squeeze(NW2_nophase(window(1):window(2),ii,window(3):window(4)));
+                       
+                    case '3'
+                        NW1_to_plot = NW1(window(1):window(2),window(3):window(4),ii);
+                        NW1_to_plot_nophase = NW1_nophase(window(1):window(2),window(3):window(4),ii);
+                        NW2_to_plot = NW2(window(1):window(2),window(3):window(4),ii);
+                        NW2_to_plot_nophase = NW2_nophase(window(1):window(2),window(3):window(4),ii);
+                       
+                end
+                
+                
+                
+            end
+            
+            
+            
+        end
+        
+        
         function [] = figure5_bottompanel(struct_toplot,intenscolor,phasecolor,phasecolor_2,window,index,dimension,fig_num)
             
             figure(fig_num);
@@ -635,8 +720,10 @@ classdef FiguresForPaper
             
             for jj = 1:numel(struct_toplot)
                 
-                NW1_3D = struct_toplot(jj).rho_shift;
                 support_3D = struct_toplot(jj).support_shift_fin;
+
+                
+                NW1_3D = struct_toplot(jj).rho_shift.*support_3D;
                 
                 NW1_3D_nophase = struct_toplot(jj).rho_nophase;
                 
@@ -658,30 +745,38 @@ classdef FiguresForPaper
 
                     
                     
-                    subplot(3,numel(struct_toplot),jj);
+                    subplot(numel(struct_toplot),3,(jj-1)*3+1);
                     imagesc(abs(NW1_to_plot));
                     axis image;
-                    colorbar;          
-                    set(gca,'FontSize',30);
+                    %colorbar;          
+                    set(gca,'FontSize',20);
                     axis off;
                     caxis(intenscolor);
+                    if jj ==1
+                        title('|\rho|');
+                    end
                     
-                    subplot(3,numel(struct_toplot),numel(struct_toplot)+jj);
+                    subplot(numel(struct_toplot),3,(jj-1)*3+2);
                     imagesc(angle(NW1_to_plot));
                     axis image;
-                    colorbar;
-                    set(gca,'FontSize',30);
+                    %colorbar;
+                    set(gca,'FontSize',20);
                     axis off;
                     caxis(phasecolor);
+                    if jj == 1
+                        title('\phi');
+                    end
                     
-                    subplot(3,numel(struct_toplot),2*numel(struct_toplot)+jj);
+                    subplot(numel(struct_toplot),3,(jj-1)*3+3);
                     imagesc(angle(NW1_nophase));
                     axis image;
-                    colorbar;
-                    set(gca,'FontSize',30);
+                    %colorbar;
+                    set(gca,'FontSize',20);
                     axis off;
                     caxis(phasecolor_2);
-                    
+                    if jj == 1
+                        title('\Delta\phi')
+                    end
                     
                     pause(.5);
                     
@@ -696,7 +791,7 @@ classdef FiguresForPaper
         
          
         
-        function [] = object_samejitter_differentnoise(struct_toplot,intenscolor,phasecolor,phasecolor_2,window,index,dimension,fig_num)
+        function [] = object_samejitter_differentnoise(struct_toplot,contour_val,intenscolor,phasecolor,phasecolor_2,window,index,dimension,fig_num)
             
             figure(fig_num);
             clf;
@@ -706,9 +801,9 @@ classdef FiguresForPaper
             for jj = 1:numel(struct_toplot)
                 
                 NW1_3D = struct_toplot(jj).rho_shift;
-                support_3D = angle(struct_toplot(jj).rho_nophase);%struct_toplot(jj).support_shift_fin;
-                
-                NW1_3D_nophase = struct_toplot(jj).rho_nophase;
+                support_3D = struct_toplot(jj).support_shift_fin;
+                NW1_3D_nophase = angle(struct_toplot(jj).rho_nophase);%NW;%struct_toplot(jj).rho_nophase;
+                NW = struct_toplot(jj).NW;
                 
                 for ii = index
                     
@@ -717,42 +812,56 @@ classdef FiguresForPaper
                         case '1'
                             NW1_to_plot = squeeze(NW1_3D(ii,window(1):window(2),window(3):window(4)));
                             support_plot = squeeze(support_3D(ii,window(1):window(2),window(3):window(4)));
-                            %NW1_nophase = squeeze(NW1_3D_nophase(ii,window(1):window(2),window(3):window(4)));
+                            NW1_nophase = squeeze(NW1_3D_nophase(ii,window(1):window(2),window(3):window(4)));
+                            NW_plot = squeeze(NW(ii,window(1):window(2),window(3):window(4)));
                         case '2'
                             NW1_to_plot = squeeze(NW1_3D(window(1):window(2),ii,window(3):window(4)));
                             support_plot = squeeze(support_3D(window(1):window(2),ii,window(3):window(4)));
-                            %NW1_nophase = squeeze(NW1_3D_nophase(window(1):window(2),ii,window(3):window(4)));
+                            NW1_nophase = squeeze(NW1_3D_nophase(window(1):window(2),ii,window(3):window(4)));
+                            NW_plot = squeeze(NW(window(1):window(2),ii,window(3):window(4)));
                         case '3'
                             NW1_to_plot = NW1_3D(window(1):window(2),window(3):window(4),ii);
                             support_plot = support_3D(window(1):window(2),window(3):window(4),ii);
-                           % NW1_nophase = NW1_3D_nophase(window(1):window(2),window(3):window(4),ii);
+                            NW1_nophase = NW1_3D_nophase(window(1):window(2),window(3):window(4),ii);
+                            NW_plot = NW(window(1):window(2),window(3):window(4),ii);
+
                     end
                     
 
                     
                     
                     subplot(numel(struct_toplot),3,(jj-1)*3+1);
-                    imagesc(abs(NW1_to_plot));
+                    %imagesc(abs(NW1_to_plot));
+                    hold on;
+                    contour(abs(NW1_to_plot),contour_val,'-k','LineWidth',1.0);
+                    contour(abs(support_plot),contour_val,'-g','LineWidth',1.0);
+                    contour(abs(NW_plot),contour_val,'-r','LineWidth',1.0);
                     axis image;
-                    colorbar;          
-                    set(gca,'FontSize',30);
+                    %colorbar;          
+                    set(gca,'FontSize',20);
                     axis off;
                     caxis(intenscolor);
                     
-                     subplot(numel(struct_toplot),3,(jj-1)*3+2);
-                    imagesc(angle(NW1_to_plot));
+                    subplot(numel(struct_toplot),3,(jj-1)*3+2);
+                    %imagesc(angle(NW1_to_plot));
+                    hold on;
+                    contour(abs(support_plot),contour_val,'-g','LineWidth',1.0);
+                    contour(abs(NW_plot),contour_val,'-r','LineWidth',1.0);
                     axis image;
                     colorbar;
-                    set(gca,'FontSize',30);
+                    set(gca,'FontSize',20);
                     axis off;
                     caxis(phasecolor);
                     
                     
                     subplot(numel(struct_toplot),3,(jj-1)*3+3);
-                    imagesc(support_plot);
+                    imagesc(NW1_nophase);
+                    hold on;
+                    contour(abs(support_plot),[1.0],'-g','LineWidth',1.0);
+                    contour(abs(NW_plot),[1.0],'-r','LineWidth',1.0);
                     axis image;
                     colorbar;
-                    set(gca,'FontSize',30);
+                    set(gca,'FontSize',20);
                     axis off;
                     caxis([-0.1 0.1]);
                     
@@ -768,6 +877,69 @@ classdef FiguresForPaper
             
             
         end
+        
+          function [] = object_onejitter_onenoise_countour(struct_toplot,contour_val,intenscolor,phasecolor,phasecolor_2,window,index,dimension,fig_num)
+            
+           
+            
+            
+            
+            for jj = 1:numel(struct_toplot)
+                
+                NW1_3D = struct_toplot(jj).rho_shift;
+                support_3D = struct_toplot(jj).support_shift_fin;
+                NW1_3D_nophase = angle(struct_toplot(jj).rho_nophase);%NW;%struct_toplot(jj).rho_nophase;
+                NW = struct_toplot(jj).NW;
+                
+                for ii = index
+                    
+                    switch dimension
+                        
+                        case '1'
+                            NW1_to_plot = squeeze(NW1_3D(ii,window(1):window(2),window(3):window(4)));
+                            support_plot = squeeze(support_3D(ii,window(1):window(2),window(3):window(4)));
+                            NW1_nophase = squeeze(NW1_3D_nophase(ii,window(1):window(2),window(3):window(4)));
+                            NW_plot = squeeze(NW(ii,window(1):window(2),window(3):window(4)));
+                        case '2'
+                            NW1_to_plot = squeeze(NW1_3D(window(1):window(2),ii,window(3):window(4)));
+                            support_plot = squeeze(support_3D(window(1):window(2),ii,window(3):window(4)));
+                            NW1_nophase = squeeze(NW1_3D_nophase(window(1):window(2),ii,window(3):window(4)));
+                            NW_plot = squeeze(NW(window(1):window(2),ii,window(3):window(4)));
+                        case '3'
+                            NW1_to_plot = NW1_3D(window(1):window(2),window(3):window(4),ii);
+                            support_plot = support_3D(window(1):window(2),window(3):window(4),ii);
+                            NW1_nophase = NW1_3D_nophase(window(1):window(2),window(3):window(4),ii);
+                            NW_plot = NW(window(1):window(2),window(3):window(4),ii);
+
+                    end
+                    
+
+                    
+                    figure(fig_num);
+                    clf;
+                    %subplot(numel(struct_toplot),3,(jj-1)*3+1);
+                    %imagesc(abs(NW1_to_plot));
+                    hold on;
+                    contour(abs(NW1_to_plot),contour_val,'-k','LineWidth',1.0);
+                    contour(abs(support_plot),contour_val,'-g','LineWidth',1.0);
+                    contour(abs(NW_plot),contour_val,'-r','LineWidth',1.0);
+                    axis image;
+                    %colorbar;          
+                    set(gca,'FontSize',20);
+                    axis off;
+                    caxis(intenscolor);
+                   legend('retrieved object','support','true object');
+                    
+                    
+                    
+                end
+                
+            end
+            
+            
+        end
+        
+        
                 
         function [] = object_samejitter_differentnoise_support(struct_toplot,X,Y,Z,fig_num)
             
@@ -795,22 +967,25 @@ classdef FiguresForPaper
                 
         end
             
-        function [] = object_samejitter_differentnoise_realobject(struct_toplot,X,Y,Z,fig_num)
+        function [] = object_samejitter_differentnoise_realobject(struct_toplot,isoval,X,Y,Z,fig_num)
             
             figure(fig_num);
             clf;
                         
             for jj = 1:numel(struct_toplot)
                 
-                NW1_3D = struct_toplot(jj).rho_shift;
-                NW = struct_toplot(jj).NW;
+                NW1_3D = abs(struct_toplot(jj).rho_shift);
+                NW = abs(struct_toplot(jj).NW);
                                
                                 
                 subplot(numel(struct_toplot),1,jj);
-                h1 = di(NW1_3D,-0.9,'g',X,Y,Z);
+                %h1 = di(NW1_3D,isoval,'k',X,Y,Z);
+                h1 = di(NW1_3D,isoval,'k');
                 hold on;
-                h2 = di(NW,-0.9,'r',X,Y,Z);
-                alpha(h1,0.5);
+                %h2 = di(NW,isoval,'r',X,Y,Z);
+                h2 = di(NW,isoval,'r');
+                axis image;
+                alpha(h1,1.0);
                 alpha(h2,0.3);
                 
                 

@@ -24,11 +24,12 @@ for jj = 1:numel(slice_array)
 end
 
 fig_num = 3;
-DisplayFunctions.display_diff_geom(NW,ki,kf,qbragg,fig_num,X,Y,Z);
+DisplayFunctions.display_diff_geom(NW,ki_o,kf_o,kf_o-ki_o,fig_num,X,Y,Z);
 
 
 %% Fig 2: detrimental effect of non regular delta theta spacing in 3DFT for noiselevel 4:
 
+%{
 jitter_summary = [0 5 10 20 40];
 noiselevel_str = '0';
 
@@ -100,8 +101,7 @@ for jj = 1:numel(NW_struct)
 end
 legend(legend_str);
 
-
-
+%}
 
 %% Figure 1: low panel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -111,8 +111,8 @@ legend(legend_str);
 %%%%%%%% Figure 5: comparison of the quality of the reconstruction for
 %%%%%%%% different jittering and different levels of noise
 
-jitterlevel_summary = [0 5 10 20 40 500];
-noiselevel_str = '0';
+jitterlevel_summary = [0 5 10 20 40 100];
+noiselevel_str2 = '1';
 
 parentfolder = '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/allresults_blueshift/';
 
@@ -121,7 +121,7 @@ parentfolder = '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/all
 
 for jj = 1:numel(jitterlevel_summary)
     
-    savefolder = [parentfolder 'jitter_' num2str(jitterlevel_summary(jj)) '_noiselevel_' noiselevel_str ];
+    savefolder = [parentfolder 'jitter_' num2str(jitterlevel_summary(jj)) '_noiselevel_' noiselevel_str2 ];
     load([savefolder '/results.mat']);
 
     [theta_iter] = DisplayResults.read_angles_iterations(data_exp,delta_thscanvals,delta_thscanvals);
@@ -155,8 +155,8 @@ struct_err(jj).theta_iter = [];
 save([parentfolder 'struct_err_level' noiselevel_str '.mat'],'struct_err');
 
 %%%%%%%%%%% error metric at different angular jittering percentages
-jitterlevel_summary = [0 5 10 20 40 100 500];
-noiselevel_str = '0';
+jitterlevel_summary = [0 5 10 20 40 100];
+noiselevel_str = '1';
 
 parentfolder = '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/allresults_blueshift/';
 
@@ -180,8 +180,8 @@ savefig([parentfolder 'error_chi_alljiiter_' noiselevel_str '_scaled.fig']);
 
 %%%%%%%%%%% error metric at different angular jittering percentages at the
 %%%%%%%%%%% 2000 th iteration
-jitterlevel_summary = [0 5 10 20 40 500];
-noiselevel_str = '0';
+jitterlevel_summary = [0 5 10 20 40 100];
+noiselevel_str = '1';
 
 parentfolder = '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/allresults_blueshift/';
 
@@ -374,7 +374,7 @@ savefig([parentfolder 'allresults_blueshift/rhoERHIO_alljitter_noiselevel' noise
 
 jitterlevel_single = [10];
 noiselevel_summary = [3 1 4 0];
-legend_summary = {'noise, cnt\_rate = 1e2','noise, cnt\_rate = 1e3','noise, cnt\_rate = 1e4','no noise'};
+legend_summary = {'SNR = 1.2 x 10^4','SNR = 1.2 x 10^5','SNR = 1.2 x 10^6','No noise'};
 
 parentfolder = '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/';
 
@@ -427,7 +427,7 @@ savefig([parentfolder 'allresults_blueshift/error_correction_alllevels_jitter_' 
 flipflag_list = [1 0 0 0]; % 10 percent
 %flipflag_list = [1 0 1 0]; % 20 percent
 %flipflag_list = [1 0 0 1]; % 40 percet
-
+%flipflag_list = [0 0 1 1]; % 100 percent
 phaseoffset = [1.64 1.64 1.53 1.54];
 
 for jj = 1:numel(noiselevel_summary)
@@ -461,24 +461,27 @@ for jj = 1:numel(noiselevel_summary)
     
     
     
-    struct_toplot(jj).rho_shift = rho_shift*exp(-1i*phase_rho_shift).*support_shift_fin*sqrt(struct_err(jj).mn/struct_err(jj).mncntrate);
+    struct_toplot(jj).rho_shift = rho_shift*exp(-1i*phase_rho_shift).*sqrt(struct_err(jj).mn/struct_err(jj).mncntrate);%rho_shift*exp(-1i*phase_rho_shift).*support_shift_fin*sqrt(struct_err(jj).mn/struct_err(jj).mncntrate);
     struct_toplot(jj).support_shift_fin = support_shift_fin;
-    struct_toplot(jj).rho_nophase = rho_shift.*conj(NW)*exp(-1i*phase_rho_shift).*support_shift_fin*exp(-1i*phaseoffset(jj));
+    struct_toplot(jj).rho_nophase = rho_shift.*conj(NW)*exp(-1i*phase_rho_shift).*exp(-1i*phaseoffset(jj));%rho_shift.*exp(1i*angle(conj(NW)))*exp(-1i*phase_rho_shift).*exp(-1i*phaseoffset(jj));%rho_shift.*conj(NW)*exp(-1i*phase_rho_shift).*support_shift_fin*exp(-1i*phaseoffset(jj));
     struct_toplot(jj).NW = NW;
 end
 
-fig_num = 60;
+fig_num = 63;
 phase_color = [0 2.0];
 phase_color_2 = [-0.1 0.1];
-intenscolor = [0 1];
-dimension = 3;
-FiguresForPaper.object_samejitter_differentnoise(struct_toplot,intenscolor,phase_color,phase_color_2,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),fig_num);
+intenscolor = [0.0 1.1];
+dimension = 2;
+FiguresForPaper.object_samejitter_differentnoise(struct_toplot,[1.1],intenscolor,phase_color,phase_color_2,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),fig_num);
+%FiguresForPaper.object_samejitter_differentnoise(struct_toplot,[1.1],intenscolor,phase_color,phase_color_2,[50 80 50 80],[66],num2str(dimension),fig_num);
+FiguresForPaper.object_onejitter_onenoise_countour(struct_toplot(2),[1.1],intenscolor,phase_color,phase_color_2,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),fig_num+1);
+
 
 fig_num = 70;
 FiguresForPaper.object_samejitter_differentnoise_support(struct_toplot,X,Y,Z,fig_num);
 
 fig_num = 80;
-FiguresForPaper.object_samejitter_differentnoise_realobject(struct_toplot,X,Y,Z,fig_num);
+FiguresForPaper.object_samejitter_differentnoise_realobject(struct_toplot,0.9,X,Y,Z,fig_num);
 
 figure(60);
 savefig([parentfolder 'allresults_blueshift/object_support_alllevels_jitter_' num2str(jitterlevel_single) '.fig' ]);
@@ -494,9 +497,9 @@ savefig([parentfolder 'allresults_blueshift/object_trueobject_3Dalllevels_jitter
 %%%%%% Plot all the jitter for all the noise levels:
 
 
-jitterlevel_summary = [0 5 10 20 40];
+jitterlevel_summary = [0 5 10 20 40 100];
 noiselevel_summary = [3 1 4 0];
-legend_summary = {'noise, cnt\_rate = 1e2','noise, cnt\_rate = 1e3','noise, cnt\_rate = 1e4','no noise'};
+legend_summary = {'SNR = 1.2 x 10^4','SNR = 1.2 x 10^5','SNR = 1.2 x 10^6','No noise'};
 
 parentfolder = '../Theta_annealing_blueshift_multiplesim_paperFig3_128angles/';
 
@@ -525,6 +528,6 @@ xlabel('angular jitter %');
 ylabel('log(\epsilon)');
 set(gca,'FontSize',20);
 
-figure(1);
+figure(200);
 savefig([parentfolder 'allresults_blueshift/chi_vs_jitter_allnoise_scaled.fig' ]);
 

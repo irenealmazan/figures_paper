@@ -12,6 +12,14 @@ plot(log10(struct_best_ERHIO.chi),'LineWidth',3.0);
 xlabel('Iterations');
 ylabel('log(\epsilon)');
 
+hold on;plot([326:426],log10(struct_best_ERHIO.chi(326:426)'),'LineWidth',3.0,'Color','k')
+hold on;plot([610:710],log10(struct_best_ERHIO.chi(610:710)'),'LineWidth',3.0,'Color','k')
+hold on;plot([882:932],log10(struct_best_ERHIO.chi(882:932)'),'LineWidth',3.0,'Color','k')
+hold on;plot([331:431],log10(struct_best_ERHIO.chi(331:431)),'LineWidth',3.0,'Color','k')
+hold on;plot([611:711],log10(struct_best_ERHIO.chi(611:711)),'LineWidth',3.0,'Color','k')
+hold on;plot([891:941],log10(struct_best_ERHIO.chi(891:941)'),'LineWidth',3.0,'Color','k')
+
+
 ax = gca;
 set(ax,'FontSize',20);
 
@@ -83,28 +91,28 @@ DisplayResults.compare_two_objects(NW*sqrt(mncntrate/mn)*exp(-1i*phase_NW),rho_2
 
 % figures:
 
-intenscolor = [0 0.03];
+intenscolor = [0 1.1];
 phase_color = [0 2];
 dimension = 3;
-FiguresForPaper.figure3_rightpanel(NW*sqrt(mncntrate/mn)*exp(-1i*phase_NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*support_new_shift_final,rho_shift.*exp(-1i*phase_rho_shift).*support_shift_fin,'','','',intenscolor,phase_color,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),26);
+FiguresForPaper.figure3_rightpanel(NW*exp(-1i*phase_NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*support_new_shift_final/sqrt(mncntrate/mn),rho_shift.*exp(-1i*phase_rho_shift).*support_shift_fin/sqrt(mncntrate/mn),'','','',intenscolor,phase_color,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),26);
 
-intenscolor = [0 0.03];
+intenscolor = [0 0.3];
 phase_color = [-0.1 0.1];
-FiguresForPaper.figure3_rightpanel(NW*sqrt(mncntrate/mn).*conj(NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*conj(NW).*support_new_shift_final*exp(-1i*phaseoffset_rho_ERHIO),rho_shift.*conj(NW)*exp(-1i*phase_rho_shift)*exp(-1i*phaseoffset_rho).*support_shift_fin ,'','','',intenscolor,phase_color,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),27);
+FiguresForPaper.figure3_rightpanel(NW*sqrt(mncntrate/mn).*conj(NW),rho_2DFT_shift*exp(-1i*phase_rho_2DFT_shift).*conj(NW).*support_new_shift_final*exp(-1i*phaseoffset_rho_ERHIO),rho_shift.*conj(NW)*exp(-1i*phase_rho_shift)*exp(-1i*phaseoffset_rho) ,'','','',intenscolor,phase_color,[40 90 40 90],[midpoint_1(dimension)],num2str(dimension),27);
 
 
 
 %%%%%%%%%%%%%% Figure 4: angle correction:
 [theta_iter] = DisplayResults.read_angles_iterations(data_exp,delta_thscanvals,delta_thscanvals);
-DisplayResults.display_all_angles_oneiterations_errorrel(theta_iter,data_exp,dth_disp,[1 500 1000 1500 cnt_ntheta],'absolute',1025);
+DisplayResults.display_all_angles_oneiterations_errorrel(theta_iter,data_exp,dth_disp,[1 500 1000 6000 cnt_ntheta],'absolute',1025);
 
 
 return;
 %%%%%%%%%%%% Saving figures:
 
 jitter_str = num2str(jitterlevel(jjj));
-noiselevel_str = '0';
-folder_str = [parentfolder 'allresults_blueshift/jitter_' jitter_str '_noiselevel_' noiselevel_str '/'];
+noiselevel_str = '3';
+folder_str = [parentfolder 'allresults_blueshift/jitter_' jitter_str '_noiselevel_' noiselevel_str '_continuation/'];
 
 
 figure(6);
